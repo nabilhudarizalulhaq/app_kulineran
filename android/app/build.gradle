@@ -5,6 +5,10 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1'
+}
+
 android {
     namespace = "com.example.apps_kulineran"
     compileSdk = flutter.compileSdkVersion
@@ -36,6 +40,10 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.debug
         }
+    }
+
+    defaultConfig {
+        multiDexEnabled true
     }
 }
 
