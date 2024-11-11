@@ -1,4 +1,4 @@
-import 'package:apps_kulineran/views/features/home.dart';
+import 'package:apps_kulineran/views/features/widget/custom_bottom_bar.dart';
 import 'package:apps_kulineran/views/features/widget/custom_filled_button.dart';
 import 'package:flutter/material.dart';
 
@@ -68,7 +68,7 @@ class Onboarding extends StatelessWidget {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const HomePage()),
+                      builder: (context) => const CustomBottomBar()),
                   (route) => false,
                 );
               },

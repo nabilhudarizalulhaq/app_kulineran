@@ -23,7 +23,7 @@ class Item_Content extends StatelessWidget {
         right: 10,
       ),
       child: Container(
-        height: 353,
+        height: 280,
         width: 156,
         decoration: BoxDecoration(
           color: white,
@@ -36,7 +36,7 @@ class Item_Content extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -47,29 +47,31 @@ class Item_Content extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: primaryColor,
                 ),
-                child: Image.network(
-                  imgUrl,
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
-                  loadingBuilder: (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
-                    return Center(
-                      child: CircularProgressIndicator(
-                        value: loadingProgress.expectedTotalBytes != null
-                            ? loadingProgress.cumulativeBytesLoaded /
-                                loadingProgress.expectedTotalBytes!
-                            : null,
-                      ),
-                    );
-                  },
-                  errorBuilder: (BuildContext context, Object exception,
-                      StackTrace? stackTrace) {
-                    return Text('Failed to load image');
-                  },
+                child: ClipOval(
+                  child: Image.network(
+                    imgUrl,
+                    width: 160,
+                    height: 160,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (BuildContext context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      );
+                    },
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return Text('Failed to load image');
+                    },
+                  ),
                 ),
               ),
               const SizedBox(
@@ -99,7 +101,7 @@ class Item_Content extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 19,
+                height: 10,
               ),
               Text(
                 price,

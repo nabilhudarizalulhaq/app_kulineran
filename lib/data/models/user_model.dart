@@ -10,19 +10,19 @@ class DataUser {
 class UserModel {
   final int id;
   final String firstName;
-  final String email;
+  // final String email;
   final String avatar;
 
   UserModel({
     required this.id,
     required this.firstName,
-    required this.email,
+    // required this.email,
     required this.avatar,
   });
 
   factory UserModel.formModel(Map<String, dynamic> json) => UserModel(
-      id: json['id'],
-      firstName: json['first_name'],
-      email: json['email'],
-      avatar: json['avatar']);
+      id: json['no'],
+      firstName: json['nama'],
+      // email: json['email'],
+      avatar: json['foto_url']);
 }
