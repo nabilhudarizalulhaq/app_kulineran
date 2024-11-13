@@ -7,14 +7,15 @@ class BottomSeed extends StatefulWidget {
   const BottomSeed({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _BottomSeedState createState() => _BottomSeedState();
 }
 
 class _BottomSeedState extends State<BottomSeed> {
   late GoogleMapController _mapController;
-  Location _location = Location();
+  final Location _location = Location();
   late LocationData _currentLocation;
-  Marker? _currentLocationMarker; // Use nullable Marker
+  Marker? _currentLocationMarker;
 
   @override
   void initState() {
@@ -22,34 +23,29 @@ class _BottomSeedState extends State<BottomSeed> {
     _getCurrentLocation();
   }
 
-  // Method to get current location and listen for updates
   Future<void> _getCurrentLocation() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
 
-    // Check if location services are enabled
-    _serviceEnabled = await _location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await _location.requestService();
-      if (!_serviceEnabled) {
+    serviceEnabled = await _location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await _location.requestService();
+      if (!serviceEnabled) {
         return;
       }
     }
 
-    // Check if permission is granted
-    _permissionGranted = await _location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await _location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await _location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
         return;
       }
     }
 
-    // Get current location
     _currentLocation = await _location.getLocation();
 
     setState(() {
-      // Initialize the marker with the new location
       _currentLocationMarker = Marker(
         markerId: MarkerId('currentLocation'),
         position: LatLng(_currentLocation.latitude!, _currentLocation.longitude!),
@@ -63,12 +59,10 @@ class _BottomSeedState extends State<BottomSeed> {
       ),
     );
 
-    // Listen for location updates
     _location.onLocationChanged.listen((LocationData currentLocation) {
       setState(() {
         _currentLocation = currentLocation;
 
-        // Update marker position as the location changes
         _currentLocationMarker = Marker(
           markerId: MarkerId('currentLocation'),
           position: LatLng(currentLocation.latitude!, currentLocation.longitude!),
@@ -76,7 +70,6 @@ class _BottomSeedState extends State<BottomSeed> {
         );
       });
 
-      // Move the camera to the new location
       _mapController.animateCamera(
         CameraUpdate.newLatLng(
           LatLng(currentLocation.latitude!, currentLocation.longitude!),
@@ -89,7 +82,16 @@ class _BottomSeedState extends State<BottomSeed> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        leading: IconButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        icon: const Icon(
+          Icons.chevron_left_rounded,
+          size: 50,
+        ),
+      ),
+        backgroundColor: white,
         elevation: 0,
         title: Text(
           'Location',
@@ -113,11 +115,10 @@ class _BottomSeedState extends State<BottomSeed> {
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             markers: _currentLocationMarker != null
-                ? {_currentLocationMarker!} // Only add marker if available
+                ? {_currentLocationMarker!}
                 : {},
           ),
 
-          // Draggable scrollable sheet (no changes here)
           DraggableScrollableSheet(
             initialChildSize: 0.1,
             minChildSize: 0.1,

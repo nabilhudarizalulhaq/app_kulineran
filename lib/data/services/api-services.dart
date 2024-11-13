@@ -1,35 +1,28 @@
+
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ApiService {
-  final String _baseUrl = '127.0.0.1:8000/api';
-
-  // GET request
-  Future<Map<String, dynamic>> fetchData(String endpoint) async {
-    final url = Uri.parse('$_baseUrl/');
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
-
-  //  POST request
-  Future<Map<String, dynamic>> postData(String endpoint, Map<String, dynamic> data) async {
-    final url = Uri.parse('$_baseUrl/$endpoint');
+class LoginService {
+  Future<String?> login(String email, String password) async {
+    final url = Uri.parse('http://127.0.0.1:8000/api/login');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: json.encode(data),
+      body: jsonEncode({'email': email, 'password': password}),
     );
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      final data = jsonDecode(response.body);
+      final token = data['token'];
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('authToken', token);
+
+      return token;
     } else {
-      throw Exception('Failed to post data');
+      final error = jsonDecode(response.body)['message'];
+      throw Exception(error ?? 'Login failed');
     }
   }
 }
+

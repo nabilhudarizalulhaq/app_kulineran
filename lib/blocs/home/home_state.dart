@@ -12,8 +12,8 @@ class HomeInitial extends HomeState {}
 class HomeLoading extends HomeState {}
 
 class HomeLoaded extends HomeState {
-  final List<UserModel> users;
-  const HomeLoaded(this.users);
+  final List<WisatakulinerModel> kuliners;
+  const HomeLoaded(this.kuliners);
 }
 
 class HomeError extends HomeState {

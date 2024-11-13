@@ -1,5 +1,6 @@
 import 'package:apps_kulineran/views/features/widget/custom_bottom_bar.dart';
 import 'package:apps_kulineran/views/features/widget/custom_filled_button.dart';
+import 'package:apps_kulineran/views/globals/theme.dart';
 import 'package:flutter/material.dart';
 
 class Onboarding extends StatelessWidget {
@@ -8,7 +9,7 @@ class Onboarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff2CE839),
+      backgroundColor: primaryColor,
       body: SingleChildScrollView(
         padding: EdgeInsets.zero,
         child: Column(

@@ -76,13 +76,13 @@ class HomePage extends StatelessWidget {
                         child: CircularProgressIndicator(),
                       );
                     } else if (state is HomeLoaded) {
-                      final data = state.users;
+                      final data = state.kuliners;
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Wrap(
                           spacing: 2,
                           runSpacing: 10,
-                          children: data.map((user) {
+                          children: data.map((kuliner) {
                             return GestureDetector(
                               onTap: () {
                                 Navigator.push(
@@ -95,9 +95,9 @@ class HomePage extends StatelessWidget {
                                 width: (MediaQuery.of(context).size.width / 2) -
                                     16,
                                 child: Item_Content(
-                                  name: user.firstName,
-                                  price: user.firstName,
-                                  imgUrl: user.avatar,
+                                  name: kuliner.nama,
+                                  price: kuliner.pemilik,
+                                  imgUrl: kuliner.fotoUrl,
                                 ),
                               ),
                             );

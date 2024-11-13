@@ -24,7 +24,7 @@ class CustomFormField extends StatefulWidget {
 
 class _CustomFormFieldState extends State<CustomFormField> {final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final LoginService loginService = LoginService();
+  final LoginService loginService = LoginService(apiUrl: '');
 
   void handleLogin() async {
     final email = emailController.text;

@@ -1,32 +1,33 @@
 import 'dart:convert';
-
 import 'package:apps_kulineran/data/models/login_model.dart';
 import 'package:http/http.dart' as http;
 
 class LoginService {
-  final String baseUrl = "http://127.0.0.1:8000/api"; // API base URL
+  final String apiUrl;
 
-  Future<User?> login(String email, String password) async {
-    final url = Uri.parse('$baseUrl/login');
-    final headers = {'Content-Type': 'application/json'};
-    final body = json.encode({
-      'email': email,
-      'password': password,
-    });
+  LoginService({required this.apiUrl});
 
+  Future<LoginResponse?> login(String email, String password) async {
     try {
-      final response = await http.post(url, headers: headers, body: body);
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        body: {
+          'email': email,
+          'password': password,
+        },
+      );
+
       if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
-        return User.fromJson(jsonResponse);
-      } else if (response.statusCode == 422) {
-        print("Validation failed: ${response.body}");
+        final data = json.decode(response.body);
+        return LoginResponse.fromJson(data);
       } else {
-        print("Error: ${response.body}");
+        ('Login failed with status: ${response.statusCode}');
+        ('Response body: ${response.body}');
+        throw Exception('Login failed: ${response.statusCode}');
       }
     } catch (e) {
-      print("Something went wrong: $e");
+      ('Error occurred: $e');
+      throw Exception('An error occurred during login: $e');
     }
-    return null;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:apps_kulineran/data/datasource/remote_data_source.dart';
-import 'package:apps_kulineran/data/models/user_model.dart';
+import 'package:apps_kulineran/data/models/wisata_kuliner_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +13,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LoadHome>((event, emit) async {
       emit(HomeLoading());
       try {
-        final result = await remoteDataSource.getUsers();
+        final result = await remoteDataSource.getKuliner();
         emit(HomeLoaded(result.data));
       } catch (error) {
         emit(HomeError(error.toString()));

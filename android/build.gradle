@@ -1,3 +1,7 @@
+defaultConfig {
+    applicationId "com.nhcode.kulineran"
+}
+
 allprojects {
     repositories {
         google()
